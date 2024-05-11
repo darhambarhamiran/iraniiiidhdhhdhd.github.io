@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>برنامه قرعه‌کشی</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Vazir', sans-serif;
+    background-color: #f7f7f7;
+  }
+  #app {
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  #name-label, #draw-button, #reset-button {
+    display: block;
+    margin: 20px auto;
+    font-size: 2em; /* افزایش اندازه متن */
+  }
+  #draw-button, #reset-button {
+    width: 250px; /* افزایش عرض دکمه‌ها */
+    padding: 15px; /* افزایش فضای داخلی دکمه‌ها */
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px; /* گرد کردن گوشه‌های دکمه‌ها */
+  }
+  #draw-button:disabled, #reset-button:disabled {
+    background-color: #CCCCCC;
+    cursor: not-allowed;
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div id="name-label">به برنامه قرعه‌کشی خوش آمدید</div>
+  <button id="draw-button">قرعه‌کشی نام</button>
+  <button id="reset-button" disabled>شروع مجدد</button>
+</div>
+
+<script>
+const originalNames = ["خالد", "راشد", "آرمین", "حامد", "طیب", "محمد"];
+let names = [...originalNames];
+const nameLabel = document.getElementById('name-label');
+const drawButton = document.getElementById('draw-button');
+const resetButton = document.getElementById('reset-button');
+
+drawButton.addEventListener('click', () => {
+  if (names.length > 0) {
+    const selectedName = names[Math.floor(Math.random() * names.length)];
+    names = names.filter(name => name !== selectedName);
+    nameLabel.textContent = `نام انتخاب شده: ${selectedName}`;
+    if (names.length === 0) {
+      drawButton.disabled = true;
+      resetButton.disabled = false;
+    }
+  } else {
+    nameLabel.textContent = "تمام نام‌ها قرعه‌کشی شده‌اند.";
+  }
+});
+
+resetButton.addEventListener('click', () => {
+  names = [...originalNames];
+  nameLabel.textContent = 'به برنامه قرعه‌کشی خوش آمدید';
+  drawButton.disabled = false;
+  resetButton.disabled = true;
+});
+</script>
+
+</body>
+</html>
